@@ -28,7 +28,7 @@ export const tenants: Tenant[] = [
 export const site = {
   name: 'Anshal Gupta',
   role: 'Full-stack software engineer',
-  url: 'https://anshal18.github.io',
+  url: 'https://anshalgupta99-ops.github.io',
   description:
     'Anshal Gupta is a full-stack engineer in Delhi NCR. He builds multi-tenant web platforms with React, Elixir/Phoenix and PostgreSQL.',
   email: 'anshalgpt@gmail.com',
