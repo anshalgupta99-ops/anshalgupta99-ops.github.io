@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anshal18.github.io/sitemap-index.xml

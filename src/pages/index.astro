@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, tenants, hero, about, stats, work, stack, projects, contact } from '../data/site';
+const first = tenants[0];
+const year = new Date().getFullYear();
+---
+<Base>
+  <div class="loader" aria-hidden="true" data-loader>
+    <div class="loader__inner">
+      <span class="loader__line">resolving tenant config</span>
+      <span class="loader__count" data-loader-count>000</span>
+      <div class="loader__bar"><span data-loader-bar></span></div>
+    </div>
+  </div>
+
+  <header class="bar">
+    <a class="bar__name" href="#top" data-scroll>{site.name}</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#about" data-scroll data-nav="about">About</a></li>
+        <li><a href="#work" data-scroll data-nav="work">Work</a></li>
+        <li class="nav-opt"><a href="#stack" data-scroll data-nav="stack">Stack</a></li>
+        <li class="nav-opt"><a href="#projects" data-scroll data-nav="projects">Projects</a></li>
+        <li><a href="#contact" data-scroll data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="status" aria-hidden="true"><i></i><span data-status>Intro / {first.name}</span></div>
+
+  <main id="main" tabindex="-1">
+    <section id="top" class="hero" data-tenant={first.name} data-label="Intro" data-hero>
+      <h1 class="hero__name" data-hero-name><span>Anshal</span><span>Gupta</span></h1>
+      <div class="hero__foot">
+        <div>
+          <p class="hero__line" data-hero-fade>{hero.line}</p>
+          <div class="hero__cta" data-hero-fade>
+            <a class="btn btn--solid" href={`mailto:${site.email}`}>Email me</a>
+            <a class="btn" href="#work" data-scroll>See my work</a>
+          </div>
+        </div>
+        <div class="skin" data-hero-fade>
+          <p class="label">{hero.skinNote}</p>
+          <div class="skin__chips" role="group" aria-label="Tenant skin">
+            {tenants.map((t, i) => (
+              <button class="chipbtn" type="button" data-skin={t.name} aria-pressed={i === 0 ? 'true' : 'false'} style={`--sw:${t.accent}`}>
+                <i></i>{t.name}
+              </button>
+            ))}
+          </div>
+          <div class="cycle" aria-hidden="true"><span data-cycle></span></div>
+          <dl class="cfg" aria-hidden="true">
+            <dt>tenant</dt><dd data-k="name">"{first.name}"</dd>
+            <dt>domain</dt><dd data-k="domain">"{first.domain}"</dd>
+            <dt>ground</dt><dd data-k="ground">"{first.ground}"</dd>
+            <dt>ink</dt><dd data-k="ink">"{first.ink}"</dd>
+            <dt>accent</dt><dd data-k="accent">"{first.accent}"</dd>
+            <dt>radius</dt><dd><span data-k="radius">{first.radius}</span><span class="cfg__caret"></span></dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="sec sec--reveal" data-tenant="paper" data-label="About" aria-labelledby="about-h">
+      <div class="sec__inner">
+        <h2 id="about-h" data-reveal>{about.heading}</h2>
+        <div class="about__grid">
+          <div class="about__text">
+            {about.paragraphs.map((p) => <p>{p}</p>)}
+          </div>
+          <dl class="about__facts">
+            {about.facts.map(([k, v]) => (
+              <div><dt class="label">{k}</dt><dd>{v}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="sec sec--reveal" data-tenant="forest" data-label="Work" aria-labelledby="work-h">
+      <div class="sec__inner">
+        <h2 id="work-h" data-reveal>{work.heading}</h2>
+        <ul class="stats">
+          {stats.map((s) => (
+            <li class="stat">
+              <p class="stat__n"><span data-count={s.value}>{s.value}</span>{s.suffix}</p>
+              <p class="stat__l">{s.label}</p>
+              <p class="stat__note label">{s.note}</p>
+            </li>
+          ))}
+        </ul>
+        <ol class="rows">
+          {work.rows.map((r) => (
+            <li class="row" data-row>
+              <span class="row__line" aria-hidden="true"></span>
+              <span class="label">{r.area}</span>
+              <h3>{r.title}</h3>
+              <p>{r.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section id="stack" class="sec sec--reveal" data-tenant="signal" data-label="Stack" aria-labelledby="stack-h">
+      <div class="sec__inner">
+        <h2 id="stack-h" data-reveal>{stack.heading}</h2>
+        <div class="stack__grid">
+          {stack.groups.map((g) => (
+            <div class="stack__group">
+              <h3 class="label">{g.label}</h3>
+              <ul>
+                {g.items.map((i) => <li class="chip" data-chip>{i}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="sec sec--reveal" data-tenant="slate" data-label="Projects" aria-labelledby="projects-h">
+      <div class="sec__inner">
+        <h2 id="projects-h" data-reveal>{projects.heading}</h2>
+        <div class="projects__list">
+          {projects.items.map((p, i) => (
+            <article class={`proj ${i === 0 ? 'proj--lead' : 'proj--side'}`}>
+              <p class="label">{p.kind}</p>
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+              <ul class="proj__stack label">
+                {p.stack.map((s) => <li>{s}</li>)}
+              </ul>
+              {p.href && <a class="btn" href={p.href} rel="noopener" target="_blank">Visit {p.hrefLabel}</a>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="sec sec--reveal" data-tenant="forest" data-label="Contact" aria-labelledby="contact-h">
+      <div class="sec__inner">
+        <h2 id="contact-h" data-reveal>{contact.heading}</h2>
+        <p class="contact__text">{contact.text}</p>
+        <a class="contact__mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <div class="contact__row">
+          {site.socials.map((s) => <a class="btn" href={s.href} rel="noopener" target="_blank">{s.label}</a>)}
+          <a class="btn" href={site.resume} target="_blank" rel="noopener">Resume (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot" data-tenant="forest" data-label="Footer">
+    <p>© {year} {site.name}. {site.location}</p>
+    <p>Built with Astro, GSAP and Lenis. Set in Bricolage Grotesque and JetBrains Mono.</p>
+  </footer>
+
+  <script>
+    import '../scripts/main';
+  </script>
+</Base>
